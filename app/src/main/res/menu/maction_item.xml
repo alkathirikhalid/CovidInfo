@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_search"
+        app:showAsAction="ifRoom"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/search_label">
+    </item>
+
+    <item
+        android:id="@+id/sort_active_cases"
+        app:showAsAction="never"
+        android:title="@string/sort_by_active_cases_label">
+    </item>
+
+    <item
+        android:id="@+id/sort_death"
+        app:showAsAction="never"
+        android:title="@string/sort_by_deaths_label">
+    </item>
+
+    <item
+        android:id="@+id/cases_100k"
+        app:showAsAction="never"
+        android:title="@string/active_cases_for_100k_hab_label">
+    </item>
+
+    <item
+        android:id="@+id/deaths_100k"
+        app:showAsAction="never"
+        android:title="@string/deaths_for_100k_hab_label">
+    </item>
+</menu>

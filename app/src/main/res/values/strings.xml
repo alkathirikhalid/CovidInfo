@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">CovidInfo</string>
+    <string name="sort_by_active_cases_label">Sort by Active Cases</string>
+    <string name="sort_by_deaths_label">Sort by Deaths</string>
+    <string name="active_cases_for_100k_hab_label">Active cases for 100k hab</string>
+    <string name="deaths_for_100k_hab_label">Deaths for 100k hab</string>
+    <string name="search_label">Search</string>
+    <string name="search_start_label">Type country name to start search.</string>
+    <string name="active_cases_lbl">Active Cases</string>
+    <string name="deaths_lbl">Deaths</string>
+    <string name="active_cases_per_100k_lbl">Active Cases per 100k</string>
+    <string name="deaths_per_100k_lbl">Deaths per 100k</string>
+    <string name="loading_label">Loading data</string>
+    <string name="wrong_lbl">Something when wrong</string>
+</resources>
