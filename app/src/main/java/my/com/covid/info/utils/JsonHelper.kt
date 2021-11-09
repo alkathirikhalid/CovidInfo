@@ -2,7 +2,6 @@ package my.com.covid.info.utils
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
 import my.com.covid.info.models.AllData
 import my.com.covid.info.models.Countries
 import my.com.covid.info.models.History
@@ -13,7 +12,7 @@ class JsonHelper constructor(private val moshi: Moshi) {
     fun ilterateCountries(json: String): ArrayList<Countries> {
         val dynamicJson = JSONObject(json)
         val keys: Iterator<String> = dynamicJson.keys()
-        val allAdapter:JsonAdapter<AllData> = moshi.adapter(AllData::class.java)
+        val allAdapter: JsonAdapter<AllData> = moshi.adapter(AllData::class.java)
         val allCountries = ArrayList<Countries>()
 
         while (keys.hasNext()) {

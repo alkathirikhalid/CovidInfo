@@ -7,15 +7,15 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import my.com.covid.info.models.History
-import my.com.covid.info.utils.ApiRepository
-import my.com.covid.info.utils.JsonHelper
-import my.com.covid.info.utils.NetworkHelper
-import my.com.covid.info.utils.Resource
-import my.com.covid.info.utils.Result
+import my.com.covid.info.utils.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DetailsViewModel(private val networkHelper: NetworkHelper, private val apiRepository: ApiRepository, private val jsonHelper: JsonHelper):ViewModel() {
+class DetailsViewModel(
+    private val networkHelper: NetworkHelper,
+    private val apiRepository: ApiRepository,
+    private val jsonHelper: JsonHelper
+) : ViewModel() {
 
     private val fromFormat = SimpleDateFormat("yyyyy/MM/dd hh:mm:ss+00", Locale.getDefault())
     private val toFormat = SimpleDateFormat("dd MMM yyyy hh:mm", Locale.getDefault())
@@ -25,12 +25,11 @@ class DetailsViewModel(private val networkHelper: NetworkHelper, private val api
         get() = _history
 
     fun fetchHistoryData(country: String, type: String) {
-        viewModelScope.launch (Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             _history.postValue(Resource.loading(null))
             try {
                 if (networkHelper.isNetworkConnected()) {
-                    val request = apiRepository.fetchHistoryData(country, type)
-                    when(request) {
+                    when (val request = apiRepository.fetchHistoryData(country, type)) {
                         is Result.Success<String> -> {
                             val json = request.data
                             val item = jsonHelper.parseHistoryJson(json)
@@ -47,7 +46,7 @@ class DetailsViewModel(private val networkHelper: NetworkHelper, private val api
                 } else {
                     _history.postValue(Resource.error("No Internet Connection", null))
                 }
-            }catch (e: Exception) {
+            } catch (e: Exception) {
                 _history.postValue(Resource.error("Error1: ${e.localizedMessage}", null))
             }
         }

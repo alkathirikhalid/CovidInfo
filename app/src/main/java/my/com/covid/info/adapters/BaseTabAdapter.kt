@@ -4,10 +4,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 
-class BaseTabAdapter constructor(private val fm: FragmentManager): FragmentStatePagerAdapter(fm) {
+class BaseTabAdapter constructor(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
-    var tabTitleArr = ArrayList<String>()
-    var tabFragmentArr = ArrayList<Fragment>()
+    private var tabTitleArr = ArrayList<String>()
+    private var tabFragmentArr = ArrayList<Fragment>()
 
     override fun getCount(): Int = tabFragmentArr.size
 
@@ -15,7 +15,7 @@ class BaseTabAdapter constructor(private val fm: FragmentManager): FragmentState
         return tabFragmentArr[position]
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
+    override fun getPageTitle(position: Int): CharSequence {
         return tabTitleArr[position]
     }
 

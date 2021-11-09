@@ -11,8 +11,12 @@ import my.com.covid.info.dbs.AppDao
 import my.com.covid.info.models.Countries
 import my.com.covid.info.utils.*
 
-class MainViewModel(private val networkHelper: NetworkHelper, private val apiRepository: ApiRepository, private val jsonHelper: JsonHelper,
-                    private val dao: AppDao): ViewModel() {
+class MainViewModel(
+    private val networkHelper: NetworkHelper,
+    private val apiRepository: ApiRepository,
+    private val jsonHelper: JsonHelper,
+    private val dao: AppDao
+) : ViewModel() {
 
     private var _info = MutableLiveData<Resource<List<Countries>>>()
     val info: LiveData<Resource<List<Countries>>>
@@ -21,18 +25,18 @@ class MainViewModel(private val networkHelper: NetworkHelper, private val apiRep
     val adapter = CountryAdapter()
 
     fun fetchCovidInfo() {
-        viewModelScope.launch (Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             _info.postValue(Resource.loading(null))
             try {
                 var countryLst = dao.getAllCountries()
                 if (countryLst.isEmpty()) {
                     if (networkHelper.isNetworkConnected()) {
-                        val dataRequest = apiRepository.fetchCovidData()
-                        when (dataRequest) {
+                        when (val dataRequest = apiRepository.fetchCovidData()) {
                             is Result.Success<String> -> {
                                 val infodata = dataRequest.data
                                 val listData = jsonHelper.ilterateCountries(infodata).toList()
-                                countryLst = listData.filter { it.name != "Global" && it.name != "Summer Olympics 2020" && it.name != "Taiwan*" && it.All.population != 0L }
+                                countryLst =
+                                    listData.filter { it.name != "Global" && it.name != "Summer Olympics 2020" && it.name != "Taiwan*" && it.All.population != 0L }
                                 dao.insertCountries(countryLst)
                                 _info.postValue(Resource.success(countryLst))
                                 adapter.addData(countryLst)
@@ -79,7 +83,7 @@ class MainViewModel(private val networkHelper: NetworkHelper, private val apiRep
             val sort = countries.sortedByDescending {
                 if (it.All.population?.toInt() == 0) {
                     (it.All.confirmed.toDouble() / 1) * 100000
-                } else{
+                } else {
                     (it.All.confirmed.toDouble() / it.All.population!!.toInt()) * 100000
                 }
             }
@@ -95,7 +99,7 @@ class MainViewModel(private val networkHelper: NetworkHelper, private val apiRep
                 //some population data return 0 from api - so need to checker
                 if (it.All.population?.toInt() == 0) {
                     (it.All.deaths.toDouble() / 1) * 100000
-                } else{
+                } else {
                     (it.All.deaths.toDouble() / it.All.population!!.toInt()) * 100000
                 }
             }
